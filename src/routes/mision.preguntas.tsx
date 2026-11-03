@@ -22,7 +22,7 @@ function Quiz() {
   const [correct, setCorrect] = useState(0);
   const [finished, setFinished] = useState(false);
   const total = FOREST_QUESTIONS.length;
-  const q = FOREST_QUESTIONS[index];
+  const q = FOREST_QUESTIONS[index]!;
 
   function answer(i: number) {
     if (selected !== null) return;

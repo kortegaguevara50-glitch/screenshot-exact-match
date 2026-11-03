@@ -68,7 +68,7 @@ function Match() {
             {DEF_ORDER.map((d) => (
               <button key={d} disabled={matched.includes(d)} onClick={() => pickDef(d)}
                 className={`rounded-xl border-2 px-4 py-3 text-left text-sm transition ${matched.includes(d) ? "border-success bg-accent opacity-70" : wrong === d ? "border-destructive bg-destructive/10" : "border-border bg-card hover:border-secondary"}`}>
-                {MATCH_PAIRS[d].definition}
+                {MATCH_PAIRS[d]!.definition}
               </button>
             ))}
           </div>
