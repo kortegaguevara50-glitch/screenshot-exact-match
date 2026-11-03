@@ -10,33 +10,128 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as GlosarioRouteImport } from './routes/glosario'
+import { Route as InsigniasRouteImport } from './routes/insignias'
+import { Route as MapaRouteImport } from './routes/mapa'
+import { Route as MisionesRouteImport } from './routes/misiones'
+import { Route as ProgresoRouteImport } from './routes/progreso'
+import { Route as MisionPreguntasRouteImport } from './routes/mision.preguntas'
+import { Route as MisionRelacionarRouteImport } from './routes/mision.relacionar'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GlosarioRoute = GlosarioRouteImport.update({
+  id: '/glosario',
+  path: '/glosario',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InsigniasRoute = InsigniasRouteImport.update({
+  id: '/insignias',
+  path: '/insignias',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MapaRoute = MapaRouteImport.update({
+  id: '/mapa',
+  path: '/mapa',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MisionesRoute = MisionesRouteImport.update({
+  id: '/misiones',
+  path: '/misiones',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProgresoRoute = ProgresoRouteImport.update({
+  id: '/progreso',
+  path: '/progreso',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MisionPreguntasRoute = MisionPreguntasRouteImport.update({
+  id: '/mision/preguntas',
+  path: '/mision/preguntas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MisionRelacionarRoute = MisionRelacionarRouteImport.update({
+  id: '/mision/relacionar',
+  path: '/mision/relacionar',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/glosario': typeof GlosarioRoute
+  '/insignias': typeof InsigniasRoute
+  '/mapa': typeof MapaRoute
+  '/misiones': typeof MisionesRoute
+  '/progreso': typeof ProgresoRoute
+  '/mision/preguntas': typeof MisionPreguntasRoute
+  '/mision/relacionar': typeof MisionRelacionarRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/glosario': typeof GlosarioRoute
+  '/insignias': typeof InsigniasRoute
+  '/mapa': typeof MapaRoute
+  '/misiones': typeof MisionesRoute
+  '/progreso': typeof ProgresoRoute
+  '/mision/preguntas': typeof MisionPreguntasRoute
+  '/mision/relacionar': typeof MisionRelacionarRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/glosario': typeof GlosarioRoute
+  '/insignias': typeof InsigniasRoute
+  '/mapa': typeof MapaRoute
+  '/misiones': typeof MisionesRoute
+  '/progreso': typeof ProgresoRoute
+  '/mision/preguntas': typeof MisionPreguntasRoute
+  '/mision/relacionar': typeof MisionRelacionarRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/glosario'
+    | '/insignias'
+    | '/mapa'
+    | '/misiones'
+    | '/progreso'
+    | '/mision/preguntas'
+    | '/mision/relacionar'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/glosario'
+    | '/insignias'
+    | '/mapa'
+    | '/misiones'
+    | '/progreso'
+    | '/mision/preguntas'
+    | '/mision/relacionar'
+  id:
+    | '__root__'
+    | '/'
+    | '/glosario'
+    | '/insignias'
+    | '/mapa'
+    | '/misiones'
+    | '/progreso'
+    | '/mision/preguntas'
+    | '/mision/relacionar'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  GlosarioRoute: typeof GlosarioRoute
+  InsigniasRoute: typeof InsigniasRoute
+  MapaRoute: typeof MapaRoute
+  MisionesRoute: typeof MisionesRoute
+  ProgresoRoute: typeof ProgresoRoute
+  MisionPreguntasRoute: typeof MisionPreguntasRoute
+  MisionRelacionarRoute: typeof MisionRelacionarRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +143,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/glosario': {
+      id: '/glosario'
+      path: '/glosario'
+      fullPath: '/glosario'
+      preLoaderRoute: typeof GlosarioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/insignias': {
+      id: '/insignias'
+      path: '/insignias'
+      fullPath: '/insignias'
+      preLoaderRoute: typeof InsigniasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mapa': {
+      id: '/mapa'
+      path: '/mapa'
+      fullPath: '/mapa'
+      preLoaderRoute: typeof MapaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/misiones': {
+      id: '/misiones'
+      path: '/misiones'
+      fullPath: '/misiones'
+      preLoaderRoute: typeof MisionesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/progreso': {
+      id: '/progreso'
+      path: '/progreso'
+      fullPath: '/progreso'
+      preLoaderRoute: typeof ProgresoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mision/preguntas': {
+      id: '/mision/preguntas'
+      path: '/mision/preguntas'
+      fullPath: '/mision/preguntas'
+      preLoaderRoute: typeof MisionPreguntasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mision/relacionar': {
+      id: '/mision/relacionar'
+      path: '/mision/relacionar'
+      fullPath: '/mision/relacionar'
+      preLoaderRoute: typeof MisionRelacionarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  GlosarioRoute: GlosarioRoute,
+  InsigniasRoute: InsigniasRoute,
+  MapaRoute: MapaRoute,
+  MisionesRoute: MisionesRoute,
+  ProgresoRoute: ProgresoRoute,
+  MisionPreguntasRoute: MisionPreguntasRoute,
+  MisionRelacionarRoute: MisionRelacionarRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
