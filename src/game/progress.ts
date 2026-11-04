@@ -1,5 +1,6 @@
 import { useSyncExternalStore } from "react";
 import { FOREST_QUESTIONS, VALLEY_QUESTIONS, XP_PER_CORRECT } from "./data";
+import { EMPTY_ADVENTURE, VALLEY_ZONES, ZONE_XP, zoneSolved, zoneUnlocked, type ValleyAdventure, type ZoneDraft } from "./valley-adventure";
 
 export interface QuizSession {
   index: number;
@@ -20,9 +21,10 @@ export interface Progress {
   valleyQuizBest: number;
   valleyQuizCompleted: boolean;
   sessions: Partial<Record<"bosque" | "valle", QuizSession>>;
+  valleyAdventure: ValleyAdventure;
 }
 
-export const EMPTY: Progress = { xp: 0, quizBest: 0, quizCompleted: false, matchCompleted: false, badges: [], valleyQuizBest: 0, valleyQuizCompleted: false, sessions: {} };
+export const EMPTY: Progress = { xp: 0, quizBest: 0, quizCompleted: false, matchCompleted: false, badges: [], valleyQuizBest: 0, valleyQuizCompleted: false, sessions: {}, valleyAdventure: EMPTY_ADVENTURE };
 
 let cache: Progress | null = null;
 const listeners = new Set<() => void>();
@@ -112,3 +114,25 @@ export function useProgress(): Progress {
     () => EMPTY,
   );
 }
+
+export function saveZoneDraft(id: string, draft: ZoneDraft) {
+  updateProgress((p) => {
+    const index = VALLEY_ZONES.findIndex((zone) => zone.id === id);
+    if (index < 0 || !zoneUnlocked(p.valleyAdventure, index) || p.valleyAdventure.completed.includes(id)) return p;
+    return { ...p, valleyAdventure: { ...p.valleyAdventure, drafts: { ...p.valleyAdventure.drafts, [id]: draft } } };
+  });
+}
+
+export function completeValleyZone(id: string, draft: ZoneDraft) {
+  updateProgress((p) => {
+    const index = VALLEY_ZONES.findIndex((zone) => zone.id === id);
+    const zone = VALLEY_ZONES[index];
+    if (!zone || !zoneUnlocked(p.valleyAdventure, index) || p.valleyAdventure.completed.includes(id) || !zoneSolved(zone, draft)) return p;
+    const completed = [...p.valleyAdventure.completed, id];
+    const allDone = completed.length === VALLEY_ZONES.length;
+    return { ...p, xp: p.xp + ZONE_XP, badges: allDone && !p.badges.includes("valley-adventurer") ? [...p.badges, "valley-adventurer"] : p.badges,
+      valleyAdventure: { completed, drafts: { ...p.valleyAdventure.drafts, [id]: { ...draft, stage: "reward" } } } };
+  });
+}
+
+export function isValleyComplete(p: Progress) { return p.valleyAdventure.completed.length === VALLEY_ZONES.length; }
