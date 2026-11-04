@@ -1,9 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { Lock, Check, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PageShell } from "@/components/QuestNav";
 import { QuestGuide } from "@/components/QuestRewards";
-import { VALLEY_ZONES, ZONE_XP, zoneUnlocked } from "@/game/valley-adventure";
+import { MagicCard } from "@/components/MagicCard";
+import { discoveredValleyTerms, officialTerm, VALLEY_ZONES, ZONE_XP, zoneUnlocked } from "@/game/valley-adventure";
 import { useProgress } from "@/game/progress";
 import landscape from "@/assets/valley-adventure.jpg";
 import explorer from "@/assets/explorer-guide.png";
@@ -11,14 +13,16 @@ import explorer from "@/assets/explorer-guide.png";
 export const Route = createFileRoute("/valle")({
   head: () => ({ meta: [
     { title: "Valle de la Planificación — Aventura de Proyecto Quest" },
-    { name: "description", content: "Explora seis zonas del Valle, recupera piezas, resuelve retos y desbloquea nuevos caminos." },
+    { name: "description", content: "Explora seis zonas del Valle, descubre cartas mágicas del glosario y desbloquea nuevos caminos." },
     { property: "og:title", content: "Valle de la Planificación — Proyecto Quest" },
-    { property: "og:description", content: "Una aventura por seis zonas con retos del glosario oficial." },
+    { property: "og:description", content: "Una aventura con cartas mágicas, una colección y seis zonas del glosario oficial." },
     { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
   ] }), component: Valley,
 });
 function Valley() {
   const p = useProgress(); const adventure = p.valleyAdventure;
+  const collection = discoveredValleyTerms(adventure);
+  const [flipped, setFlipped] = useState<number[]>([]);
   const count = adventure.completed.length; const current = Math.min(count, VALLEY_ZONES.length - 1);
   return <PageShell title="🗺️ Valle de la Planificación">
     <div className="mb-4 flex flex-wrap items-center justify-between gap-3"><p className="font-bold text-secondary">{count}/6 zonas exploradas · {count * ZONE_XP} XP recuperados</p><progress aria-label="Zonas del Valle completadas" value={count} max={6} className="quest-progress h-3 w-48" /></div>
@@ -33,6 +37,10 @@ function Valley() {
     </div>
     <div className="mt-4"><QuestGuide message={count === 6 ? "¡Conquistamos el Valle! Cada camino cuenta una historia." : count ? `¡Camino abierto! Nos espera ${VALLEY_ZONES[current]?.name}.` : "¡Bienvenido! Nuestra aventura comienza en la aldea."} /></div>
     <ol className="mt-5 grid gap-x-8 sm:grid-cols-2 lg:grid-cols-3">{VALLEY_ZONES.map((zone, i) => { const unlocked = zoneUnlocked(adventure, i); const done = adventure.completed.includes(zone.id); return <li key={zone.id} className="flex items-center gap-3 border-b py-4"><span className="text-2xl">{done ? "✅" : unlocked ? zone.emoji : "🔒"}</span><div className="min-w-0 flex-1"><h2 className="font-sans text-base font-extrabold">{zone.name}</h2><p className="mt-1 text-xs text-muted-foreground">{done ? "Completada · 20 XP" : unlocked ? "Camino abierto · 20 XP" : "Camino por descubrir"}</p></div>{unlocked && <Button asChild size="icon" variant="ghost" aria-label={`Entrar a ${zone.name}`} title={`Entrar a ${zone.name}`}><Link to="/aventura/$zona" params={{ zona: zone.id }}><ArrowRight /></Link></Button>}</li>; })}</ol>
+    <section className="mt-8 border-t pt-6">
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-2"><h2 className="text-xl font-bold text-primary">✦ Cartas del Valle</h2><span className="text-sm font-bold text-secondary">{collection.length}/16 descubiertas</span></div>
+      {collection.length ? <div className="card-collection">{collection.map((number) => <MagicCard key={number} compact revealed={!flipped.includes(number)} label={`Voltear carta de ${officialTerm(number).term}`} title={officialTerm(number).term} symbol={VALLEY_ZONES.find((zone) => zone.terms.includes(number))?.emoji} onClick={() => setFlipped((previous) => previous.includes(number) ? previous.filter((n) => n !== number) : [...previous, number])} />)}</div> : <QuestGuide message="La primera carta nos espera en la aldea." />}
+    </section>
     <div className="mt-6 flex flex-wrap gap-4"><Button asChild variant="link"><Link to="/mapa">← Volver al mapa</Link></Button><Button asChild variant="link"><Link to="/mision/valle">Práctica de conceptos</Link></Button></div>
   </PageShell>;
 }
