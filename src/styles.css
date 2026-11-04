@@ -101,3 +101,28 @@
   .quest-stars { display: none; }
   .quest-progress::-webkit-progress-value { transition: none; }
 }
+
+.valley-world { aspect-ratio: 3 / 2; max-height: 660px; }
+.valley-location { position: absolute; display: flex; flex-direction: column; align-items: center; transform: translate(-50%, -50%); }
+.valley-location-label { max-width: 150px; }
+.valley-location-0 { left: 17%; top: 73%; }
+.valley-location-1 { left: 36%; top: 39%; }
+.valley-location-2 { left: 53%; top: 23%; }
+.valley-location-3 { left: 58%; top: 59%; }
+.valley-location-4 { left: 83%; top: 54%; }
+.valley-location-5 { left: 85%; top: 16%; }
+.valley-explorer-0 { left: 8%; top: 72%; }
+.valley-explorer-1 { left: 26%; top: 39%; }
+.valley-explorer-2 { left: 43%; top: 23%; }
+.valley-explorer-3 { left: 48%; top: 60%; }
+.valley-explorer-4 { left: 72%; top: 55%; }
+.valley-explorer-5 { left: 73%; top: 16%; }
+.valley-beacon { animation: valley-beacon 1600ms ease-in-out 3; }
+@keyframes valley-beacon { 50% { transform: translateY(-4px); box-shadow: 0 0 0 5px var(--gold); } }
+@media (max-width: 640px) {
+  .valley-world { aspect-ratio: 3 / 2; }
+  .valley-location-label { display: none; }
+  .valley-location > button, .valley-location > a { width: 40px; height: 40px; }
+  .valley-explorer { width: 42px; height: 56px; }
+}
+@media (prefers-reduced-motion: reduce) { .valley-beacon { animation: none; } }

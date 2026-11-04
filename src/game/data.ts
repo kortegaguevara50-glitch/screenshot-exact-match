@@ -173,6 +173,7 @@ export interface Badge {
 }
 
 export const BADGES: Badge[] = [
+  { id: "valley-adventurer", name: "Aventurero del Valle", emoji: "🧭", description: "Completa las seis zonas del Valle de la Planificación." },
   { id: "valley-explorer", name: "Explorador del Valle", emoji: "🗺️", description: "Completa la misión del Valle de la Planificación." },
   { id: "first-step", name: "Primer Paso", emoji: "🥾", description: "Responde tu primera pregunta correctamente." },
   { id: "forest-explorer", name: "Explorador del Bosque", emoji: "🌲", description: "Completa la misión de preguntas del Bosque." },
