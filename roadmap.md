@@ -5,6 +5,6 @@
 - [x] Update map and progress; verify the full adventure on desktop and mobile.
 
 # Cartas mágicas del Valle
-- [ ] Add original two-sided cards with persisted discovery and three card challenge mechanics.
-- [ ] Present discovered collections, rewards and unlocked zones without changing Forest or XP rules.
-- [ ] Verify reload compatibility, the full card adventure and mobile layout.
+- [x] Add original two-sided cards with persisted discovery and three card challenge mechanics.
+- [x] Present discovered collections, rewards and unlocked zones without changing Forest or XP rules.
+- [x] Verify reload compatibility, the full card adventure and mobile layout.
