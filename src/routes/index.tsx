@@ -4,6 +4,8 @@ import hero from "@/assets/hero-quest.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { title: "Proyecto Quest — Aventura para aprender proyectos" },
       { name: "description", content: "Videojuego educativo de Administración y Evaluación de Proyectos e Innovación Tecnológica." },
       { property: "og:title", content: "Proyecto Quest" },

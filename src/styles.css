@@ -78,3 +78,26 @@
   }
   h1, h2, h3 { font-family: var(--font-display); }
 }
+
+.quest-progress { appearance: none; overflow: hidden; border-radius: 999px; background: var(--muted); }
+.quest-progress::-webkit-progress-bar { background: var(--muted); }
+.quest-progress::-webkit-progress-value { background: var(--gradient-gold); transition: width 300ms ease; border-radius: 999px; }
+.quest-progress::-moz-progress-bar { background: var(--gradient-gold); border-radius: 999px; }
+.quest-positive { animation: quest-pop 400ms ease-out; }
+.quest-nudge { animation: quest-nudge 300ms ease-out; }
+.quest-reward { animation: quest-pop 500ms ease-out; }
+.quest-xp { animation: quest-rise 650ms ease-out both; }
+.quest-enter { animation: quest-enter 250ms ease-out; }
+.quest-stars span { animation: quest-spark 850ms ease-out both; }
+.quest-stars span:nth-child(2n) { animation-delay: 80ms; }
+.quest-stars span:nth-child(3) { animation-delay: 140ms; }
+@keyframes quest-pop { 0% { transform: scale(.92); opacity: .4; } 60% { transform: scale(1.035); } 100% { transform: scale(1); opacity: 1; } }
+@keyframes quest-nudge { 25% { transform: translateX(-3px); } 65% { transform: translateX(3px); } }
+@keyframes quest-rise { from { transform: translateY(12px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes quest-enter { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes quest-spark { from { opacity: 0; transform: translateY(12px) scale(.4); } 30% { opacity: 1; } to { opacity: 0; transform: translateY(-28px) scale(1.15) rotate(20deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .quest-positive, .quest-nudge, .quest-reward, .quest-xp, .quest-enter, .quest-stars span { animation: none; }
+  .quest-stars { display: none; }
+  .quest-progress::-webkit-progress-value { transition: none; }
+}
