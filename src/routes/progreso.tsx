@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { PageShell } from "@/components/QuestNav";
 import { WORLDS } from "@/game/data";
-import { isForestComplete, resetProgress, useProgress } from "@/game/progress";
+import { isForestComplete, isValleyComplete, resetProgress, useProgress } from "@/game/progress";
 
 export const Route = createFileRoute("/progreso")({
   head: () => ({
@@ -20,7 +20,7 @@ export const Route = createFileRoute("/progreso")({
 
 function ProgressPage() {
   const p = useProgress();
-  const worldsDone = Number(isForestComplete(p)) + Number(p.valleyQuizCompleted);
+  const worldsDone = Number(isForestComplete(p)) + Number(isValleyComplete(p));
   return (
     <PageShell title="⭐ Mi progreso" subtitle="Tu avance se guarda en este navegador.">
       <div className="grid gap-4 sm:grid-cols-3">
@@ -37,8 +37,9 @@ function ProgressPage() {
       </div>
       <div className="mt-6 rounded-2xl border bg-card p-5 shadow-quest">
         <h2 className="font-bold">🗺️ Valle de la Planificación</h2>
-        <p className="mt-2 text-sm">{p.valleyQuizCompleted ? "✅" : "⬜"} La Ruta de la Planificación</p>
-        {p.valleyQuizCompleted && <p className="mt-2 text-sm font-bold text-primary">Mejor resultado: {p.valleyQuizBest}/16</p>}
+        <p className="mt-2 text-sm">{isValleyComplete(p) ? "✅" : "🧭"} Aventura: {p.valleyAdventure.completed.length}/6 zonas completadas</p>
+        <progress aria-label="Progreso de las zonas" value={p.valleyAdventure.completed.length} max={6} className="quest-progress mt-3 h-3 w-full" />
+        {p.valleyQuizCompleted && <p className="mt-2 text-sm font-bold text-primary">Práctica anterior · Mejor resultado: {p.valleyQuizBest}/16</p>}
       </div>
       <Button variant="outline"
         onClick={() => { if (confirm("¿Borrar todo tu progreso?")) resetProgress(); }}

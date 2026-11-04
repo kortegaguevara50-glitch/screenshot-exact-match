@@ -16,6 +16,7 @@ import { Route as MapaRouteImport } from './routes/mapa'
 import { Route as MisionesRouteImport } from './routes/misiones'
 import { Route as ProgresoRouteImport } from './routes/progreso'
 import { Route as ValleRouteImport } from './routes/valle'
+import { Route as AventuraZonaRouteImport } from './routes/aventura.$zona'
 import { Route as MisionPreguntasRouteImport } from './routes/mision.preguntas'
 import { Route as MisionRelacionarRouteImport } from './routes/mision.relacionar'
 import { Route as MisionValleRouteImport } from './routes/mision.valle'
@@ -55,6 +56,11 @@ const ValleRoute = ValleRouteImport.update({
   path: '/valle',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AventuraZonaRoute = AventuraZonaRouteImport.update({
+  id: '/aventura/$zona',
+  path: '/aventura/$zona',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MisionPreguntasRoute = MisionPreguntasRouteImport.update({
   id: '/mision/preguntas',
   path: '/mision/preguntas',
@@ -79,6 +85,7 @@ export interface FileRoutesByFullPath {
   '/misiones': typeof MisionesRoute
   '/progreso': typeof ProgresoRoute
   '/valle': typeof ValleRoute
+  '/aventura/$zona': typeof AventuraZonaRoute
   '/mision/preguntas': typeof MisionPreguntasRoute
   '/mision/relacionar': typeof MisionRelacionarRoute
   '/mision/valle': typeof MisionValleRoute
@@ -91,6 +98,7 @@ export interface FileRoutesByTo {
   '/misiones': typeof MisionesRoute
   '/progreso': typeof ProgresoRoute
   '/valle': typeof ValleRoute
+  '/aventura/$zona': typeof AventuraZonaRoute
   '/mision/preguntas': typeof MisionPreguntasRoute
   '/mision/relacionar': typeof MisionRelacionarRoute
   '/mision/valle': typeof MisionValleRoute
@@ -104,6 +112,7 @@ export interface FileRoutesById {
   '/misiones': typeof MisionesRoute
   '/progreso': typeof ProgresoRoute
   '/valle': typeof ValleRoute
+  '/aventura/$zona': typeof AventuraZonaRoute
   '/mision/preguntas': typeof MisionPreguntasRoute
   '/mision/relacionar': typeof MisionRelacionarRoute
   '/mision/valle': typeof MisionValleRoute
@@ -118,6 +127,7 @@ export interface FileRouteTypes {
     | '/misiones'
     | '/progreso'
     | '/valle'
+    | '/aventura/$zona'
     | '/mision/preguntas'
     | '/mision/relacionar'
     | '/mision/valle'
@@ -130,6 +140,7 @@ export interface FileRouteTypes {
     | '/misiones'
     | '/progreso'
     | '/valle'
+    | '/aventura/$zona'
     | '/mision/preguntas'
     | '/mision/relacionar'
     | '/mision/valle'
@@ -142,6 +153,7 @@ export interface FileRouteTypes {
     | '/misiones'
     | '/progreso'
     | '/valle'
+    | '/aventura/$zona'
     | '/mision/preguntas'
     | '/mision/relacionar'
     | '/mision/valle'
@@ -155,6 +167,7 @@ export interface RootRouteChildren {
   MisionesRoute: typeof MisionesRoute
   ProgresoRoute: typeof ProgresoRoute
   ValleRoute: typeof ValleRoute
+  AventuraZonaRoute: typeof AventuraZonaRoute
   MisionPreguntasRoute: typeof MisionPreguntasRoute
   MisionRelacionarRoute: typeof MisionRelacionarRoute
   MisionValleRoute: typeof MisionValleRoute
@@ -211,6 +224,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ValleRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/aventura/$zona': {
+      id: '/aventura/$zona'
+      path: '/aventura/$zona'
+      fullPath: '/aventura/$zona'
+      preLoaderRoute: typeof AventuraZonaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/mision/preguntas': {
       id: '/mision/preguntas'
       path: '/mision/preguntas'
@@ -243,6 +263,7 @@ const rootRouteChildren: RootRouteChildren = {
   MisionesRoute: MisionesRoute,
   ProgresoRoute: ProgresoRoute,
   ValleRoute: ValleRoute,
+  AventuraZonaRoute: AventuraZonaRoute,
   MisionPreguntasRoute: MisionPreguntasRoute,
   MisionRelacionarRoute: MisionRelacionarRoute,
   MisionValleRoute: MisionValleRoute,

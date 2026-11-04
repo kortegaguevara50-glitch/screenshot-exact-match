@@ -27,7 +27,7 @@ function Missions() {
         <MissionCard to="/mision/relacionar" emoji="🔗" title="El Puente de los Conceptos" desc="Relaciona cada concepto con su definición." status={p.matchCompleted ? "✅ Completada" : "Pendiente"} />
       </div>
       <h2 className="mt-8 mb-4 text-xl font-bold text-primary">🗺️ Valle de la Planificación</h2>
-      <MissionCard to="/valle" emoji="🧭" title="La Ruta de la Planificación" desc="16 preguntas del glosario oficial." status={p.valleyQuizCompleted ? `✅ Mejor: ${p.valleyQuizBest}/16` : "Disponible"} />
+      <MissionCard to="/valle" emoji="🧭" title="Aventura por el Valle" desc="Seis lugares por descubrir." status={`${p.valleyAdventure.completed.length}/6 zonas exploradas`} />
       <Link to="/mapa" className="mt-8 inline-block font-semibold text-secondary hover:underline">← Volver al mapa</Link>
     </PageShell>
   );
