@@ -1,5 +1,13 @@
 import { useSyncExternalStore } from "react";
-import { FOREST_QUESTIONS } from "./data";
+import { FOREST_QUESTIONS, VALLEY_QUESTIONS } from "./data";
+
+export interface QuizSession {
+  index: number;
+  selected: number | null;
+  correct: number;
+  finished: boolean;
+  earnedBadges: string[];
+}
 
 const KEY = "proyecto-quest-progress-v1";
 
@@ -9,9 +17,12 @@ export interface Progress {
   quizCompleted: boolean;
   matchCompleted: boolean;
   badges: string[];
+  valleyQuizBest: number;
+  valleyQuizCompleted: boolean;
+  sessions: Partial<Record<"bosque" | "valle", QuizSession>>;
 }
 
-export const EMPTY: Progress = { xp: 0, quizBest: 0, quizCompleted: false, matchCompleted: false, badges: [] };
+export const EMPTY: Progress = { xp: 0, quizBest: 0, quizCompleted: false, matchCompleted: false, badges: [], valleyQuizBest: 0, valleyQuizCompleted: false, sessions: {} };
 
 let cache: Progress | null = null;
 const listeners = new Set<() => void>();
@@ -24,12 +35,12 @@ function read(): Progress {
   } catch {
     cache = EMPTY;
   }
-  return cache!;
+  return cache ?? EMPTY;
 }
 
 function write(next: Progress) {
   cache = next;
-  localStorage.setItem(KEY, JSON.stringify(next));
+  try { localStorage.setItem(KEY, JSON.stringify(next)); } catch { /* Continue playing if browser storage is unavailable. */ }
   listeners.forEach((l) => l());
 }
 
@@ -64,6 +75,31 @@ export function resetProgress() {
 
 export function isForestComplete(p: Progress) {
   return p.quizCompleted && p.matchCompleted;
+}
+
+export function saveQuizSession(world: "bosque" | "valle", session: QuizSession) {
+  updateProgress((p) => ({ ...p, sessions: { ...p.sessions, [world]: session } }));
+}
+
+export function recordQuizAnswer(world: "bosque" | "valle", session: QuizSession, right: boolean) {
+  updateProgress((p) => {
+    const first = right && !p.badges.includes("first-step");
+    const nextSession = first ? { ...session, earnedBadges: [...session.earnedBadges, "first-step"] } : session;
+    return { ...p, xp: p.xp + (right ? 10 : 0), badges: first ? [...p.badges, "first-step"] : p.badges, sessions: { ...p.sessions, [world]: nextSession } };
+  });
+}
+
+export function completeQuizSession(world: "bosque" | "valle", session: QuizSession) {
+  updateProgress((p) => {
+    const rewards = world === "valle" ? ["valley-explorer"] : ["forest-explorer", ...(session.correct === FOREST_QUESTIONS.length ? ["perfect"] : [])];
+    const newlyEarned = rewards.filter((id) => !p.badges.includes(id));
+    return {
+      ...p,
+      ...(world === "valle" ? { valleyQuizCompleted: true, valleyQuizBest: Math.max(p.valleyQuizBest, Math.min(session.correct, VALLEY_QUESTIONS.length)) } : { quizCompleted: true, quizBest: Math.max(p.quizBest, session.correct) }),
+      badges: [...p.badges, ...newlyEarned],
+      sessions: { ...p.sessions, [world]: { ...session, finished: true, earnedBadges: [...session.earnedBadges, ...newlyEarned] } },
+    };
+  });
 }
 
 export function useProgress(): Progress {
