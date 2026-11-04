@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { GLOSSARY, VALLEY_TERM_NUMBERS } from "@/game/data";
-import { VALLEY_ZONES, definitionPieces, NEW_DRAFT, zoneUnlocked, zoneSolved } from "@/game/valley-adventure";
+import { VALLEY_ZONES, definitionPieces, discoveredValleyTerms, NEW_DRAFT, zoneUnlocked, zoneSolved } from "@/game/valley-adventure";
 
 describe("Adventure content", () => {
   it("covers the requested 16 concepts with three types and exact definition fragments", () => {
@@ -24,6 +24,22 @@ describe("Adventure content", () => {
 });
 describe("Adventure saving and rewards", () => {
   beforeEach(() => { vi.resetModules(); localStorage.clear(); });
+  it("persists discovered card faces across reloads without awarding XP", async () => {
+    const progress = await import("@/game/progress");
+    progress.saveZoneDraft("aldea", { ...NEW_DRAFT, stage: "challenge", revealed: ["c10", "d10"] });
+    vi.resetModules();
+    const restored = await import("@/game/progress");
+    restored.saveZoneDraft("puente", { ...NEW_DRAFT, revealed: ["c26"] });
+    const p = JSON.parse(localStorage.getItem("proyecto-quest-progress-v1") ?? "{}");
+    expect(p.valleyAdventure.drafts.aldea.revealed).toEqual(["c10", "d10"]);
+    expect(p.valleyAdventure.drafts.puente).toBeUndefined();
+    expect(p.xp).toBe(0);
+    expect(discoveredValleyTerms(p.valleyAdventure)).toEqual([10]);
+  });
+  it("derives collected cards from pre-card completions and preserves partial drafts", () => {
+    const adventure = { completed: ["aldea"], drafts: { campamento: { ...NEW_DRAFT, matched: [28] }, torre: { ...NEW_DRAFT, step: 1 } } };
+    expect(discoveredValleyTerms(adventure)).toEqual([10, 23, 24, 25, 27, 28]);
+  });
   it("keeps previous quiz XP and completion without pre-completing adventure zones", async () => {
     localStorage.setItem("proyecto-quest-progress-v1", JSON.stringify({ xp: 160, quizCompleted: true, quizBest: 5, matchCompleted: true, valleyQuizCompleted: true, valleyQuizBest: 16, badges: ["valley-explorer"] }));
     const progress = await import("@/game/progress");

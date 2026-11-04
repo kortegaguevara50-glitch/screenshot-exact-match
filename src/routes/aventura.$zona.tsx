@@ -5,8 +5,8 @@ import { VALLEY_ZONES } from "@/game/valley-adventure";
 
 export const Route = createFileRoute("/aventura/$zona")({
   head: ({ params }) => { const zone = VALLEY_ZONES.find((entry) => entry.id === params.zona); const title = `${zone?.name ?? "Zona del Valle"} — Proyecto Quest`; return { meta: [
-    { title }, { name: "description", content: "Una zona de aventura del Valle de la Planificación con retos del glosario oficial." },
-    { property: "og:title", content: title }, { property: "og:description", content: "Recupera las piezas del Valle y desbloquea un nuevo camino." },
+    { title }, { name: "description", content: `Descubre y enlaza cartas mágicas en ${zone?.name ?? "el Valle"} con conceptos del glosario oficial.` },
+    { property: "og:title", content: title }, { property: "og:description", content: `Completa la misión de cartas de ${zone?.name ?? "el Valle"} y desbloquea un nuevo camino.` },
     { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" },
   ] }; },
   component: Zone,

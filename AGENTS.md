@@ -13,3 +13,4 @@
 - Derive Valley question content from glossary references without duplicating definitions or changing glossary assignments; this prevents content drift.
 - Preserve the existing localStorage key and Forest fields, default new Valley fields during reads, and persist in-flight quiz sessions to support existing players and reloads.
 - Keep Valley adventure zone definitions and validation in a browser-safe domain module, separate from legacy quizzes; persist drafts and sequential completion atomically with idempotent zone rewards to support reloads without duplicate XP.
+- Use a shared browser-safe two-sided MagicCard for Valley challenges and collection; persist optional discovery IDs in existing zone drafts and derive collected concepts from drafts/completions so legacy saves and once-per-zone rewards remain compatible.

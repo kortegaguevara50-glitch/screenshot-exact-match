@@ -126,3 +126,48 @@
   .valley-explorer { width: 42px; height: 56px; }
 }
 @media (prefers-reduced-motion: reduce) { .valley-beacon { animation: none; } }
+
+:root {
+  --card-ink: oklch(0.3 0.065 165);
+  --card-paper: oklch(0.97 0.03 95);
+  --card-answer: oklch(0.94 0.035 225);
+  --card-line: oklch(0.7 0.11 85);
+  --shadow-magic: 0 8px 16px -6px oklch(0.25 0.06 160 / .3);
+  --shadow-discovery: 0 0 0 3px var(--gold), 0 8px 24px -5px oklch(0.7 0.14 85 / .5);
+}
+.magic-card { position: relative; display: block; width: 100%; height: 310px; min-width: 0; padding: 0; border: 0; border-radius: 8px; background: transparent; white-space: normal; perspective: 1000px; text-align: center; }
+.magic-card:hover { background: transparent; }
+.magic-card:disabled { opacity: 1; }
+.magic-card-turn { display: grid; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 420ms ease; }
+.magic-card.is-revealed .magic-card-turn { transform: rotateY(180deg); }
+.magic-card-back, .magic-card-front { grid-area: 1 / 1; width: 100%; height: 100%; border-radius: 8px; overflow: hidden; backface-visibility: hidden; box-shadow: var(--shadow-magic); }
+.magic-card-back { position: relative; background: var(--primary); }
+.magic-card-back img { width: 100%; height: 100%; object-fit: cover; }
+.magic-card-back-label { position: absolute; bottom: 16px; left: 12px; right: 12px; display: flex; justify-content: center; align-items: center; gap: 6px; padding: 8px 3px; background: var(--primary); color: var(--primary-foreground); font-weight: 800; font-size: 12px; border: 1px solid var(--gold); border-radius: 4px; }
+.magic-card-front { transform: rotateY(180deg); display: flex; flex-direction: column; align-items: center; gap: 12px; border: 3px double var(--card-line); outline: 1px solid var(--card-line); outline-offset: -9px; padding: 22px 18px 16px; background: var(--card-paper); color: var(--card-ink); background-image: repeating-linear-gradient(45deg, transparent, transparent 8px, color-mix(in oklab, var(--gold) 6%, transparent) 8px, color-mix(in oklab, var(--gold) 6%, transparent) 9px); }
+.magic-card-answer .magic-card-front { background-color: var(--card-answer); border-color: var(--secondary); }
+.magic-card-caption { font-size: 10px; font-weight: 800; text-transform: uppercase; }
+.magic-card-symbol { display: grid; place-items: center; width: 64px; height: 64px; flex-shrink: 0; border: 1px solid var(--card-line); border-radius: 50%; font-size: 32px; color: var(--primary); }
+.magic-card-title { font-family: var(--font-display); font-size: 17px; font-weight: 800; overflow-wrap: anywhere; line-height: 1.4; }
+.magic-card-text { font-size: 13px; line-height: 1.55; overflow-wrap: anywhere; }
+.magic-card-seal { margin-top: auto; color: var(--secondary); font-size: 20px; }
+.magic-card-seal svg { width: 20px; height: 20px; }
+.magic-card.is-selected .magic-card-front { box-shadow: var(--shadow-discovery); border-color: var(--gold); }
+.magic-card.is-matched .magic-card-front { border-color: var(--success); box-shadow: var(--shadow-discovery); }
+.magic-card-compact { height: 230px; }
+.magic-card-compact .magic-card-symbol { width: 38px; height: 38px; font-size: 24px; }
+.magic-card-compact .magic-card-title { font-size: 14px; }
+.magic-card-answer { height: 370px; }
+.magic-card-answer .magic-card-symbol { width: 36px; height: 36px; font-size: 22px; }
+.magic-card-answer .magic-card-front { gap: 8px; }
+.card-table { border-top: 1px solid var(--border); padding-top: 20px; }
+.card-collection { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 16px; }
+@media (max-width: 640px) {
+  .magic-card { height: 280px; }
+  .magic-card-front { padding: 18px 14px 12px; gap: 9px; }
+  .magic-card-answer { height: 410px; }
+  .magic-card-answer .magic-card-front { padding: 18px 12px 12px; }
+  .magic-card-text { font-size: 12px; }
+  .magic-card-compact { height: 240px; }
+}
+@media (prefers-reduced-motion: reduce) { .magic-card-turn { transition: none; } }
