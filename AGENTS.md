@@ -8,3 +8,7 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Share question gameplay and reward presentation in a browser-safe mission component; keep each world's question data and completion records separate to preserve Forest compatibility.
+- Derive Valley question content from glossary references without duplicating definitions or changing glossary assignments; this prevents content drift.
+- Preserve the existing localStorage key and Forest fields, default new Valley fields during reads, and persist in-flight quiz sessions to support existing players and reloads.

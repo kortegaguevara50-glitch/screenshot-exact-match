@@ -12,7 +12,7 @@ export interface World {
 
 export const WORLDS: World[] = [
   { id: "bosque", name: "Bosque del Conocimiento", emoji: "🌲", description: "Descubre los conceptos básicos de proyectos e innovación.", available: true },
-  { id: "valle", name: "Valle de la Planificación", emoji: "🗺️", description: "Objetivos, cronogramas y recursos.", available: false },
+  { id: "valle", name: "Valle de la Planificación", emoji: "🗺️", description: "Objetivos, cronogramas y recursos.", available: true },
   { id: "ciudad", name: "Ciudad Tecnológica", emoji: "🏙️", description: "Innovación, tecnología y cambio.", available: false },
   { id: "fortaleza", name: "Fortaleza de la Evaluación", emoji: "🏰", description: "Indicadores, VAN, TIR y decisiones.", available: false },
 ];
@@ -143,6 +143,28 @@ export const FOREST_QUESTIONS: Question[] = [
 
 export const MATCH_PAIRS: Term[] = GLOSSARY.slice(0, 4);
 
+// Practice includes the requested related concepts without changing glossary assignments.
+export const VALLEY_TERM_NUMBERS = [10, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 67];
+export const VALLEY_TERMS = VALLEY_TERM_NUMBERS.flatMap((number) => {
+  const term = GLOSSARY.find((entry) => entry.number === number);
+  return term ? [term] : [];
+});
+export const VALLEY_QUESTIONS: Question[] = VALLEY_TERMS.map((entry, index) => {
+  const correct = index % 4;
+  const distractors = [1, 5, 9].flatMap((offset) => {
+    const other = VALLEY_TERMS[(index + offset) % VALLEY_TERMS.length];
+    return other ? [other.term] : [];
+  });
+  const options = [...distractors];
+  options.splice(correct, 0, entry.term);
+  return {
+    question: entry.definition,
+    options: [options[0] ?? "", options[1] ?? "", options[2] ?? "", options[3] ?? ""],
+    correct,
+    explanation: `${entry.term}: ${entry.definition}`,
+  };
+});
+
 export interface Badge {
   id: string;
   name: string;
@@ -151,6 +173,7 @@ export interface Badge {
 }
 
 export const BADGES: Badge[] = [
+  { id: "valley-explorer", name: "Explorador del Valle", emoji: "🗺️", description: "Completa la misión del Valle de la Planificación." },
   { id: "first-step", name: "Primer Paso", emoji: "🥾", description: "Responde tu primera pregunta correctamente." },
   { id: "forest-explorer", name: "Explorador del Bosque", emoji: "🌲", description: "Completa la misión de preguntas del Bosque." },
   { id: "perfect", name: "Sabio Perfecto", emoji: "🦉", description: "Obtén todas las respuestas correctas en la misión." },
