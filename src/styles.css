@@ -120,8 +120,7 @@
 .valley-beacon { animation: valley-beacon 1600ms ease-in-out 3; }
 @keyframes valley-beacon { 50% { transform: translateY(-4px); box-shadow: 0 0 0 5px var(--gold); } }
 @media (max-width: 640px) {
-  .valley-world { aspect-ratio: 1 / 1; }
-  .valley-world > img:first-child { object-fit: fill; }
+  .valley-world { aspect-ratio: 3 / 2; }
   .valley-location-label { display: none; }
   .valley-location > button, .valley-location > a { width: 40px; height: 40px; }
   .valley-explorer { width: 42px; height: 56px; }
