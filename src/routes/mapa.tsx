@@ -6,6 +6,8 @@ import { isForestComplete, useProgress } from "@/game/progress";
 export const Route = createFileRoute("/mapa")({
   head: () => ({
     meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { title: "Mapa de mundos — Proyecto Quest" },
       { name: "description", content: "Elige tu próximo mundo en Proyecto Quest." },
       { property: "og:title", content: "Mapa de mundos — Proyecto Quest" },
@@ -21,7 +23,7 @@ function MapPage() {
     <PageShell title="Mapa del reino" subtitle="Elige un mundo para comenzar tu misión.">
       <div className="grid gap-5 sm:grid-cols-2">
         {WORLDS.map((w, i) => {
-          const done = w.id === "bosque" && isForestComplete(p);
+          const done = w.id === "bosque" ? isForestComplete(p) : w.id === "valle" && p.valleyQuizCompleted;
           const card = (
             <div className={`h-full rounded-2xl border-2 bg-card p-6 shadow-quest transition ${w.available ? "border-gold hover:-translate-y-1" : "opacity-60"}`}>
               <div className="flex items-center justify-between">
@@ -35,7 +37,7 @@ function MapPage() {
               <p className="mt-2 text-sm text-muted-foreground">{w.description}</p>
             </div>
           );
-          return w.available ? <Link key={w.id} to="/misiones">{card}</Link> : <div key={w.id}>{card}</div>;
+          return w.available ? <Link key={w.id} to={w.id === "valle" ? "/valle" : "/misiones"}>{card}</Link> : <div key={w.id}>{card}</div>;
         })}
       </div>
     </PageShell>

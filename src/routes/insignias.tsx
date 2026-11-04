@@ -6,6 +6,8 @@ import { useProgress } from "@/game/progress";
 export const Route = createFileRoute("/insignias")({
   head: () => ({
     meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { title: "Insignias — Proyecto Quest" },
       { name: "description", content: "Recompensas obtenidas en tu aventura." },
       { property: "og:title", content: "Insignias — Proyecto Quest" },

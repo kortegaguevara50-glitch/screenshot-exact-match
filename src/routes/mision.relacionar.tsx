@@ -7,6 +7,8 @@ import { addXp, finishMatch } from "@/game/progress";
 export const Route = createFileRoute("/mision/relacionar")({
   head: () => ({
     meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { title: "El Puente de los Conceptos — Proyecto Quest" },
       { name: "description", content: "Relaciona conceptos con sus definiciones." },
       { property: "og:title", content: "El Puente de los Conceptos" },

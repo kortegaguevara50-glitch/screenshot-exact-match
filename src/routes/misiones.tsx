@@ -6,6 +6,8 @@ import { useProgress } from "@/game/progress";
 export const Route = createFileRoute("/misiones")({
   head: () => ({
     meta: [
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { title: "Misiones del Bosque — Proyecto Quest" },
       { name: "description", content: "Misiones interactivas del Bosque del Conocimiento." },
       { property: "og:title", content: "Misiones — Proyecto Quest" },
@@ -18,17 +20,20 @@ export const Route = createFileRoute("/misiones")({
 function Missions() {
   const p = useProgress();
   return (
-    <PageShell title="🌲 Bosque del Conocimiento" subtitle="Completa ambas misiones para conquistar el bosque.">
+    <PageShell title="⚔️ Misiones">
+      <h2 className="mb-4 text-xl font-bold text-primary">🌲 Bosque del Conocimiento</h2>
       <div className="grid gap-5 md:grid-cols-2">
         <MissionCard to="/mision/preguntas" emoji="❓" title="El Sendero de las Preguntas" desc={`${FOREST_QUESTIONS.length} preguntas de opción múltiple.`} status={p.quizCompleted ? `✅ Mejor: ${p.quizBest}/${FOREST_QUESTIONS.length}` : "Pendiente"} />
         <MissionCard to="/mision/relacionar" emoji="🔗" title="El Puente de los Conceptos" desc="Relaciona cada concepto con su definición." status={p.matchCompleted ? "✅ Completada" : "Pendiente"} />
       </div>
+      <h2 className="mt-8 mb-4 text-xl font-bold text-primary">🗺️ Valle de la Planificación</h2>
+      <MissionCard to="/valle" emoji="🧭" title="La Ruta de la Planificación" desc="16 preguntas del glosario oficial." status={p.valleyQuizCompleted ? `✅ Mejor: ${p.valleyQuizBest}/16` : "Disponible"} />
       <Link to="/mapa" className="mt-8 inline-block font-semibold text-secondary hover:underline">← Volver al mapa</Link>
     </PageShell>
   );
 }
 
-function MissionCard({ to, emoji, title, desc, status }: { to: "/mision/preguntas" | "/mision/relacionar"; emoji: string; title: string; desc: string; status: string }) {
+function MissionCard({ to, emoji, title, desc, status }: { to: "/mision/preguntas" | "/mision/relacionar" | "/valle"; emoji: string; title: string; desc: string; status: string }) {
   return (
     <Link to={to} className="block rounded-2xl border-2 border-gold bg-card p-6 shadow-quest transition hover:-translate-y-1">
       <span className="text-4xl">{emoji}</span>

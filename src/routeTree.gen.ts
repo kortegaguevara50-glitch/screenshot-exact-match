@@ -15,8 +15,10 @@ import { Route as InsigniasRouteImport } from './routes/insignias'
 import { Route as MapaRouteImport } from './routes/mapa'
 import { Route as MisionesRouteImport } from './routes/misiones'
 import { Route as ProgresoRouteImport } from './routes/progreso'
+import { Route as ValleRouteImport } from './routes/valle'
 import { Route as MisionPreguntasRouteImport } from './routes/mision.preguntas'
 import { Route as MisionRelacionarRouteImport } from './routes/mision.relacionar'
+import { Route as MisionValleRouteImport } from './routes/mision.valle'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -48,6 +50,11 @@ const ProgresoRoute = ProgresoRouteImport.update({
   path: '/progreso',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ValleRoute = ValleRouteImport.update({
+  id: '/valle',
+  path: '/valle',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MisionPreguntasRoute = MisionPreguntasRouteImport.update({
   id: '/mision/preguntas',
   path: '/mision/preguntas',
@@ -58,6 +65,11 @@ const MisionRelacionarRoute = MisionRelacionarRouteImport.update({
   path: '/mision/relacionar',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MisionValleRoute = MisionValleRouteImport.update({
+  id: '/mision/valle',
+  path: '/mision/valle',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -66,8 +78,10 @@ export interface FileRoutesByFullPath {
   '/mapa': typeof MapaRoute
   '/misiones': typeof MisionesRoute
   '/progreso': typeof ProgresoRoute
+  '/valle': typeof ValleRoute
   '/mision/preguntas': typeof MisionPreguntasRoute
   '/mision/relacionar': typeof MisionRelacionarRoute
+  '/mision/valle': typeof MisionValleRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -76,8 +90,10 @@ export interface FileRoutesByTo {
   '/mapa': typeof MapaRoute
   '/misiones': typeof MisionesRoute
   '/progreso': typeof ProgresoRoute
+  '/valle': typeof ValleRoute
   '/mision/preguntas': typeof MisionPreguntasRoute
   '/mision/relacionar': typeof MisionRelacionarRoute
+  '/mision/valle': typeof MisionValleRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -87,8 +103,10 @@ export interface FileRoutesById {
   '/mapa': typeof MapaRoute
   '/misiones': typeof MisionesRoute
   '/progreso': typeof ProgresoRoute
+  '/valle': typeof ValleRoute
   '/mision/preguntas': typeof MisionPreguntasRoute
   '/mision/relacionar': typeof MisionRelacionarRoute
+  '/mision/valle': typeof MisionValleRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -99,8 +117,10 @@ export interface FileRouteTypes {
     | '/mapa'
     | '/misiones'
     | '/progreso'
+    | '/valle'
     | '/mision/preguntas'
     | '/mision/relacionar'
+    | '/mision/valle'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -109,8 +129,10 @@ export interface FileRouteTypes {
     | '/mapa'
     | '/misiones'
     | '/progreso'
+    | '/valle'
     | '/mision/preguntas'
     | '/mision/relacionar'
+    | '/mision/valle'
   id:
     | '__root__'
     | '/'
@@ -119,8 +141,10 @@ export interface FileRouteTypes {
     | '/mapa'
     | '/misiones'
     | '/progreso'
+    | '/valle'
     | '/mision/preguntas'
     | '/mision/relacionar'
+    | '/mision/valle'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -130,8 +154,10 @@ export interface RootRouteChildren {
   MapaRoute: typeof MapaRoute
   MisionesRoute: typeof MisionesRoute
   ProgresoRoute: typeof ProgresoRoute
+  ValleRoute: typeof ValleRoute
   MisionPreguntasRoute: typeof MisionPreguntasRoute
   MisionRelacionarRoute: typeof MisionRelacionarRoute
+  MisionValleRoute: typeof MisionValleRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -178,6 +204,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProgresoRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/valle': {
+      id: '/valle'
+      path: '/valle'
+      fullPath: '/valle'
+      preLoaderRoute: typeof ValleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/mision/preguntas': {
       id: '/mision/preguntas'
       path: '/mision/preguntas'
@@ -192,6 +225,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MisionRelacionarRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mision/valle': {
+      id: '/mision/valle'
+      path: '/mision/valle'
+      fullPath: '/mision/valle'
+      preLoaderRoute: typeof MisionValleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -202,8 +242,10 @@ const rootRouteChildren: RootRouteChildren = {
   MapaRoute: MapaRoute,
   MisionesRoute: MisionesRoute,
   ProgresoRoute: ProgresoRoute,
+  ValleRoute: ValleRoute,
   MisionPreguntasRoute: MisionPreguntasRoute,
   MisionRelacionarRoute: MisionRelacionarRoute,
+  MisionValleRoute: MisionValleRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
