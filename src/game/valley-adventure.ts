@@ -22,10 +22,19 @@ export function definitionPieces(number: number): string[] {
   const size = Math.ceil(words.length / 4);
   return Array.from({ length: 4 }, (_, i) => words.slice(i * size, (i + 1) * size).join(" ")).filter(Boolean);
 }
-export interface ZoneDraft { stage: "intro" | "challenge" | "reward"; matched: number[]; step: number; order: number[]; }
+export interface ZoneDraft { stage: "intro" | "challenge" | "reward"; matched: number[]; step: number; order: number[]; revealed?: string[]; }
 export interface ValleyAdventure { completed: string[]; drafts: Record<string, ZoneDraft>; }
 export const EMPTY_ADVENTURE: ValleyAdventure = { completed: [], drafts: {} };
 export const NEW_DRAFT: ZoneDraft = { stage: "intro", matched: [], step: 0, order: [] };
+// Collection is derived from existing drafts, including pre-card saves; no parallel reward ledger.
+export function discoveredValleyTerms(adventure: ValleyAdventure): number[] {
+  return [...new Set(VALLEY_ZONES.flatMap((zone) => {
+    if (adventure.completed.includes(zone.id)) return zone.terms;
+    const draft = adventure.drafts[zone.id];
+    if (!draft) return [];
+    return zone.terms.filter((number, index) => draft.revealed?.includes(`c${number}`) || draft.matched.includes(number) || (zone.kind === "complete" && index < draft.step));
+  }))];
+}
 export function zoneUnlocked(adventure: ValleyAdventure, index: number): boolean {
   return index === 0 || Boolean(VALLEY_ZONES[index - 1] && adventure.completed.includes(VALLEY_ZONES[index - 1]?.id ?? ""));
 }
