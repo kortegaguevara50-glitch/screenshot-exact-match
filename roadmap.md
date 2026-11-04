@@ -1,5 +1,5 @@
 # Valle de la Planificación
-- [x] Add an official-glossary Valley quiz and independent saved progress.
-- [x] Make the Valley accessible from the map and missions; preserve Forest and locked worlds.
-- [x] Add an original guide and brief answer/result celebrations.
-- [x] Verify scoring, saved progress and desktop/mobile play.
+- [ ] Build an illustrated Valley with six sequential zones and explorer movement.
+- [ ] Add matching, completing and ordering challenges using exact glossary content.
+- [ ] Persist challenges, zone unlocks and once-per-zone rewards without changing legacy progress.
+- [ ] Update map and progress; verify the full adventure on desktop and mobile.
