@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from "react";
-import { FOREST_QUESTIONS, VALLEY_QUESTIONS } from "./data";
+import { FOREST_QUESTIONS, VALLEY_QUESTIONS, XP_PER_CORRECT } from "./data";
 
 export interface QuizSession {
   index: number;
@@ -85,7 +85,7 @@ export function recordQuizAnswer(world: "bosque" | "valle", session: QuizSession
   updateProgress((p) => {
     const first = right && !p.badges.includes("first-step");
     const nextSession = first ? { ...session, earnedBadges: [...session.earnedBadges, "first-step"] } : session;
-    return { ...p, xp: p.xp + (right ? 10 : 0), badges: first ? [...p.badges, "first-step"] : p.badges, sessions: { ...p.sessions, [world]: nextSession } };
+    return { ...p, xp: p.xp + (right ? XP_PER_CORRECT : 0), badges: first ? [...p.badges, "first-step"] : p.badges, sessions: { ...p.sessions, [world]: nextSession } };
   });
 }
 
