@@ -1,5 +1,8 @@
-@import "tailwindcss" source(none);
+
+@import "tailwindcss";
+
 @source "../src";
+
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
@@ -38,7 +41,8 @@
 
 :root {
   --radius: 1rem;
-  --background: oklch(0.97 0.025 90);
+
+  --background: oklch(0.84 0.045 255);
   --foreground: oklch(0.28 0.05 160);
   --card: oklch(0.99 0.015 90);
   --card-foreground: oklch(0.28 0.05 160);
@@ -60,114 +64,920 @@
   --border: oklch(0.86 0.05 90);
   --input: oklch(0.86 0.05 90);
   --ring: oklch(0.8 0.15 80);
-  --gradient-hero: linear-gradient(180deg, oklch(0.28 0.06 160 / 0.1), oklch(0.22 0.06 160 / 0.85));
-  --gradient-gold: linear-gradient(135deg, oklch(0.85 0.14 85), oklch(0.72 0.15 70));
+
+  --gradient-hero: linear-gradient(
+    180deg,
+    oklch(0.28 0.06 160 / 0.1),
+    oklch(0.22 0.06 160 / 0.85)
+  );
+
+  --gradient-gold: linear-gradient(
+    135deg,
+    oklch(0.85 0.14 85),
+    oklch(0.72 0.15 70)
+  );
+
   --shadow-quest: 0 10px 30px -12px oklch(0.35 0.08 160 / 0.35);
 }
 
-@utility bg-hero-overlay { background-image: var(--gradient-hero); }
-@utility bg-gold-gradient { background-image: var(--gradient-gold); }
-@utility shadow-quest { box-shadow: var(--shadow-quest); }
+@utility bg-hero-overlay {
+  background-image: var(--gradient-hero);
+}
+
+@utility bg-gold-gradient {
+  background-image: var(--gradient-gold);
+}
+
+@utility shadow-quest {
+  box-shadow: var(--shadow-quest);
+}
 
 @layer base {
-  * { border-color: var(--color-border); }
+  * {
+    border-color: var(--color-border);
+  }
+
   body {
-    background-color: var(--color-background);
+    background:
+      radial-gradient(
+        circle at 8% 18%,
+        oklch(0.88 0.13 82 / 0.42) 0%,
+        transparent 14%
+      ),
+      radial-gradient(
+        circle at 92% 12%,
+        oklch(0.86 0.12 82 / 0.35) 0%,
+        transparent 13%
+      ),
+      radial-gradient(
+        circle at 78% 82%,
+        oklch(0.88 0.13 82 / 0.28) 0%,
+        transparent 16%
+      ),
+      radial-gradient(
+        circle at 20% 70%,
+        oklch(0.72 0.1 300 / 0.5) 0%,
+        transparent 30%
+      ),
+      radial-gradient(
+        circle at 82% 45%,
+        oklch(0.74 0.1 285 / 0.45) 0%,
+        transparent 32%
+      ),
+      radial-gradient(
+        circle at 50% 5%,
+        oklch(0.86 0.08 245 / 0.7) 0%,
+        transparent 34%
+      ),
+      radial-gradient(
+        circle at 45% 100%,
+        oklch(0.72 0.09 245 / 0.55) 0%,
+        transparent 40%
+      ),
+      linear-gradient(
+        135deg,
+        oklch(0.87 0.045 255),
+        oklch(0.82 0.06 285),
+        oklch(0.77 0.07 250)
+      );
+
+    background-attachment: fixed;
     color: var(--color-foreground);
     font-family: var(--font-sans);
   }
-  h1, h2, h3 { font-family: var(--font-display); }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+  }
 }
 
-.quest-progress { appearance: none; overflow: hidden; border-radius: 999px; background: var(--muted); }
-.quest-progress::-webkit-progress-bar { background: var(--muted); }
-.quest-progress::-webkit-progress-value { background: var(--gradient-gold); transition: width 300ms ease; border-radius: 999px; }
-.quest-progress::-moz-progress-bar { background: var(--gradient-gold); border-radius: 999px; }
-.quest-positive { animation: quest-pop 400ms ease-out; }
-.quest-nudge { animation: quest-nudge 300ms ease-out; }
-.quest-reward { animation: quest-pop 500ms ease-out; }
-.quest-xp { animation: quest-rise 650ms ease-out both; }
-.quest-enter { animation: quest-enter 250ms ease-out; }
-.quest-stars span { animation: quest-spark 850ms ease-out both; }
-.quest-stars span:nth-child(2n) { animation-delay: 80ms; }
-.quest-stars span:nth-child(3) { animation-delay: 140ms; }
-@keyframes quest-pop { 0% { transform: scale(.92); opacity: .4; } 60% { transform: scale(1.035); } 100% { transform: scale(1); opacity: 1; } }
-@keyframes quest-nudge { 25% { transform: translateX(-3px); } 65% { transform: translateX(3px); } }
-@keyframes quest-rise { from { transform: translateY(12px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-@keyframes quest-enter { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes quest-spark { from { opacity: 0; transform: translateY(12px) scale(.4); } 30% { opacity: 1; } to { opacity: 0; transform: translateY(-28px) scale(1.15) rotate(20deg); } }
+/* =========================
+   ANIMACIONES DE QUEST
+========================= */
+
+.quest-progress {
+  animation: quest-progress 0.6s ease-out;
+}
+
+.quest-positive {
+  animation: quest-positive 0.45s ease-out;
+}
+
+.quest-nudge {
+  animation: quest-nudge 0.3s ease-out;
+}
+
+.quest-reward {
+  animation: quest-reward 0.55s ease-out;
+}
+
+.quest-xp {
+  animation: quest-xp 0.65s ease-out;
+}
+
+.quest-enter {
+  animation: quest-enter 0.4s ease-out;
+}
+
+.quest-stars {
+  animation: quest-stars 0.7s ease-out;
+}
+
+@keyframes quest-progress {
+  from {
+    transform: scaleX(0.92);
+    opacity: 0.5;
+  }
+
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+@keyframes quest-positive {
+  0% {
+    transform: scale(0.96);
+    opacity: 0;
+  }
+
+  60% {
+    transform: scale(1.02);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes quest-nudge {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-4px);
+  }
+
+  75% {
+    transform: translateX(4px);
+  }
+}
+
+@keyframes quest-reward {
+  0% {
+    transform: translateY(8px) scale(0.94);
+    opacity: 0;
+  }
+
+  60% {
+    transform: translateY(-2px) scale(1.03);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes quest-xp {
+  0% {
+    transform: translateY(6px);
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes quest-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes quest-stars {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .quest-positive, .quest-nudge, .quest-reward, .quest-xp, .quest-enter, .quest-stars span { animation: none; }
-  .quest-stars { display: none; }
-  .quest-progress::-webkit-progress-value { transition: none; }
+  .quest-progress,
+  .quest-positive,
+  .quest-nudge,
+  .quest-reward,
+  .quest-xp,
+  .quest-enter,
+  .quest-stars {
+    animation: none;
+  }
 }
 
-.valley-world { aspect-ratio: 3 / 2; max-height: 660px; }
-.valley-location { position: absolute; display: flex; flex-direction: column; align-items: center; transform: translate(-50%, -50%); }
-.valley-location-label { max-width: 150px; }
-.valley-location-0 { left: 17%; top: 73%; }
-.valley-location-1 { left: 36%; top: 39%; }
-.valley-location-2 { left: 53%; top: 23%; }
-.valley-location-3 { left: 58%; top: 59%; }
-.valley-location-4 { left: 83%; top: 54%; }
-.valley-location-5 { left: 85%; top: 16%; }
-.valley-explorer-0 { left: 8%; top: 72%; }
-.valley-explorer-1 { left: 26%; top: 39%; }
-.valley-explorer-2 { left: 43%; top: 23%; }
-.valley-explorer-3 { left: 48%; top: 60%; }
-.valley-explorer-4 { left: 72%; top: 55%; }
-.valley-explorer-5 { left: 73%; top: 16%; }
-.valley-beacon { animation: valley-beacon 1600ms ease-in-out 3; }
-@keyframes valley-beacon { 50% { transform: translateY(-4px); box-shadow: 0 0 0 5px var(--gold); } }
-@media (max-width: 640px) {
-  .valley-world { aspect-ratio: 3 / 2; }
-  .valley-location-label { display: none; }
-  .valley-location > button, .valley-location > a { width: 40px; height: 40px; }
-  .valley-explorer { width: 42px; height: 56px; }
+/* =========================
+   MAPA DEL VALLE
+========================= */
+
+.valley-world {
+  position: relative;
+  min-height: 720px;
+  overflow: hidden;
+  border-radius: 2rem;
 }
-@media (prefers-reduced-motion: reduce) { .valley-beacon { animation: none; } }
+
+.valley-location {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+}
+
+.valley-location-0 {
+  left: 12%;
+  top: 72%;
+}
+
+.valley-location-1 {
+  left: 18%;
+  top: 27%;
+}
+
+.valley-location-2 {
+  left: 48%;
+  top: 18%;
+}
+
+.valley-location-3 {
+  left: 78%;
+  top: 30%;
+}
+
+.valley-location-4 {
+  left: 25%;
+  top: 58%;
+}
+
+.valley-location-5 {
+  left: 60%;
+  top: 55%;
+}
+
+.valley-explorer {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.valley-beacon {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow:
+    0 0 0 8px rgba(255, 255, 255, 0.08),
+    0 0 28px rgba(255, 255, 255, 0.5);
+  animation: beacon-pulse 2s ease-in-out infinite;
+}
+
+@keyframes beacon-pulse {
+  0%,
+  100% {
+    transform: scale(0.9);
+    opacity: 0.7;
+  }
+
+  50% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 900px) {
+  .valley-world {
+    min-height: 600px;
+  }
+}
+
+@media (max-width: 640px) {
+  .valley-world {
+    min-height: 520px;
+  }
+}
+
+/* =========================
+   MAPA DEL BOSQUE
+========================= */
+
+.forest-world {
+  position: relative;
+  min-height: 720px;
+  overflow: hidden;
+  border-radius: 2rem;
+}
+
+.forest-location {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+}
+
+.forest-location-1 {
+  left: 20%;
+  top: 25%;
+}
+
+.forest-location-2 {
+  left: 50%;
+  top: 18%;
+}
+
+.forest-location-3 {
+  left: 80%;
+  top: 28%;
+}
+
+.forest-location-4 {
+  left: 30%;
+  top: 58%;
+}
+
+.forest-location-5 {
+  left: 67%;
+  top: 55%;
+}
+
+.forest-location-6 {
+  left: 50%;
+  top: 82%;
+}
+
+.forest-explorer {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.forest-beacon {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow:
+    0 0 0 8px rgba(255, 255, 255, 0.08),
+    0 0 28px rgba(255, 255, 255, 0.5);
+  animation: beacon-pulse 2s ease-in-out infinite;
+}
+
+@media (max-width: 900px) {
+  .forest-world {
+    min-height: 600px;
+  }
+}
+
+@media (max-width: 640px) {
+  .forest-world {
+    min-height: 520px;
+  }
+}
+
+/* =========================
+   MAPA DE LA CIUDAD TECNOLÓGICA
+========================= */
+
+.technology-world {
+  position: relative;
+  min-height: 720px;
+  overflow: hidden;
+  border-radius: 2rem;
+}
+
+.technology-location {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+}
+
+.technology-location-0 {
+  left: 18%;
+  top: 25%;
+}
+
+.technology-location-1 {
+  left: 50%;
+  top: 18%;
+}
+
+.technology-location-2 {
+  left: 80%;
+  top: 28%;
+}
+
+.technology-location-3 {
+  left: 28%;
+  top: 58%;
+}
+
+.technology-location-4 {
+  left: 67%;
+  top: 55%;
+}
+
+.technology-location-5 {
+  left: 50%;
+  top: 82%;
+}
+
+.technology-explorer {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.technology-beacon {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow:
+    0 0 0 8px rgba(255, 255, 255, 0.08),
+    0 0 28px rgba(255, 255, 255, 0.5);
+  animation: beacon-pulse 2s ease-in-out infinite;
+}
+
+@media (max-width: 900px) {
+  .technology-world {
+    min-height: 600px;
+  }
+}
+
+@media (max-width: 640px) {
+  .technology-world {
+    min-height: 520px;
+  }
+}
+
+/* =========================
+   MAPA DE LA FORTALEZA
+========================= */
+
+.fortress-world {
+  position: relative;
+  min-height: 720px;
+  overflow: hidden;
+  border-radius: 2rem;
+}
+
+.fortress-location {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+}
+
+.fortress-location-0 {
+  left: 18%;
+  top: 25%;
+}
+
+.fortress-location-1 {
+  left: 50%;
+  top: 18%;
+}
+
+.fortress-location-2 {
+  left: 80%;
+  top: 28%;
+}
+
+.fortress-location-3 {
+  left: 28%;
+  top: 58%;
+}
+
+.fortress-location-4 {
+  left: 67%;
+  top: 55%;
+}
+
+.fortress-location-5 {
+  left: 50%;
+  top: 82%;
+}
+
+.fortress-explorer {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  pointer-events: none;
+}
+
+.fortress-beacon {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow:
+    0 0 0 8px rgba(255, 255, 255, 0.08),
+    0 0 28px rgba(255, 255, 255, 0.5);
+  animation: beacon-pulse 2s ease-in-out infinite;
+}
+
+@media (max-width: 900px) {
+  .fortress-world {
+    min-height: 600px;
+  }
+}
+
+@media (max-width: 640px) {
+  .fortress-world {
+    min-height: 520px;
+  }
+}
+
+/* =========================
+   CARTAS MÁGICAS
+========================= */
+
+/* =========================
+   CARTAS MÁGICAS
+   ========================= */
 
 :root {
   --card-ink: oklch(0.3 0.065 165);
   --card-paper: oklch(0.97 0.03 95);
   --card-answer: oklch(0.94 0.035 225);
   --card-line: oklch(0.7 0.11 85);
-  --shadow-magic: 0 8px 16px -6px oklch(0.25 0.06 160 / .3);
-  --shadow-discovery: 0 0 0 3px var(--gold), 0 8px 24px -5px oklch(0.7 0.14 85 / .5);
+  --shadow-magic: 0 8px 16px -6px oklch(0.25 0.06 160 / 0.3);
+  --shadow-discovery:
+    0 0 0 3px var(--gold),
+    0 8px 24px -5px oklch(0.7 0.14 85 / 0.5);
 }
-.magic-card { position: relative; display: block; width: 100%; height: 310px; min-width: 0; padding: 0; border: 0; border-radius: 8px; background: transparent; white-space: normal; perspective: 1000px; text-align: center; }
-.magic-card:hover { background: transparent; }
-.magic-card:disabled { opacity: 1; }
-.magic-card-turn { display: grid; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 420ms ease; }
-.magic-card.is-revealed .magic-card-turn { transform: rotateY(180deg); }
-.magic-card-back, .magic-card-front { grid-area: 1 / 1; width: 100%; height: 100%; border-radius: 8px; overflow: hidden; backface-visibility: hidden; box-shadow: var(--shadow-magic); }
-.magic-card-back { position: relative; background: var(--primary); }
-.magic-card-back img { width: 100%; height: 100%; object-fit: cover; }
-.magic-card-back-label { position: absolute; bottom: 16px; left: 12px; right: 12px; display: flex; justify-content: center; align-items: center; gap: 6px; padding: 8px 3px; background: var(--primary); color: var(--primary-foreground); font-weight: 800; font-size: 12px; border: 1px solid var(--gold); border-radius: 4px; }
-.magic-card-front { transform: rotateY(180deg); display: flex; flex-direction: column; align-items: center; gap: 12px; border: 3px double var(--card-line); outline: 1px solid var(--card-line); outline-offset: -9px; padding: 22px 18px 16px; background: var(--card-paper); color: var(--card-ink); background-image: repeating-linear-gradient(45deg, transparent, transparent 8px, color-mix(in oklab, var(--gold) 6%, transparent) 8px, color-mix(in oklab, var(--gold) 6%, transparent) 9px); }
-.magic-card-answer .magic-card-front { background-color: var(--card-answer); border-color: var(--secondary); }
-.magic-card-caption { font-size: 10px; font-weight: 800; text-transform: uppercase; }
-.magic-card-symbol { display: grid; place-items: center; width: 64px; height: 64px; flex-shrink: 0; border: 1px solid var(--card-line); border-radius: 50%; font-size: 32px; color: var(--primary); }
-.magic-card-title { font-family: var(--font-display); font-size: 17px; font-weight: 800; overflow-wrap: anywhere; line-height: 1.4; }
-.magic-card-text { font-size: 13px; line-height: 1.55; overflow-wrap: anywhere; }
-.magic-card-seal { margin-top: auto; color: var(--secondary); font-size: 20px; }
-.magic-card-seal svg { width: 20px; height: 20px; }
-.magic-card.is-selected .magic-card-front { box-shadow: var(--shadow-discovery); border-color: var(--gold); }
-.magic-card.is-matched .magic-card-front { border-color: var(--success); box-shadow: var(--shadow-discovery); }
-.magic-card-compact { height: 230px; }
-.magic-card-compact .magic-card-symbol { width: 38px; height: 38px; font-size: 24px; }
-.magic-card-compact .magic-card-title { font-size: 14px; }
-.magic-card-answer { height: 370px; }
-.magic-card-answer .magic-card-symbol { width: 36px; height: 36px; font-size: 22px; }
-.magic-card-answer .magic-card-front { gap: 8px; }
-.card-table { border-top: 1px solid var(--border); padding-top: 20px; }
-.card-collection { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 16px; }
+
+/* Estructura principal */
+
+.magic-card {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 310px;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  white-space: normal;
+  perspective: 1000px;
+  text-align: center;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.magic-card:hover {
+  background: transparent;
+}
+
+.magic-card:disabled {
+  opacity: 1;
+  cursor: default;
+}
+
+.magic-card:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 4px;
+}
+
+/* Volteo 3D */
+
+.magic-card-turn {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 420ms ease;
+}
+
+.magic-card.is-revealed .magic-card-turn {
+  transform: rotateY(180deg);
+}
+
+/* Caras de las cartas */
+
+.magic-card-back,
+.magic-card-front {
+  grid-area: 1 / 1;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-shadow: var(--shadow-magic);
+}
+
+/* Parte trasera */
+
+.magic-card-back {
+  position: relative;
+  background: var(--primary);
+}
+
+.magic-card-back img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.magic-card-back-label {
+  position: absolute;
+  bottom: 16px;
+  left: 12px;
+  right: 12px;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 3px;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-weight: 800;
+  font-size: 12px;
+  border: 1px solid var(--gold);
+  border-radius: 4px;
+}
+
+/* Parte delantera: papel dorado */
+
+.magic-card-front {
+  transform: rotateY(180deg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  border: 3px double var(--card-line);
+  outline: 1px solid var(--card-line);
+  outline-offset: -9px;
+  padding: 22px 18px 16px;
+  background-color: var(--card-paper);
+  color: var(--card-ink);
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 8px,
+    color-mix(in oklab, var(--gold) 6%, transparent) 8px,
+    color-mix(in oklab, var(--gold) 6%, transparent) 9px
+  );
+}
+
+/* Cartas de respuesta */
+
+.magic-card-answer {
+  height: 370px;
+}
+
+.magic-card-answer .magic-card-front {
+  background-color: var(--card-answer);
+  border-color: var(--secondary);
+  gap: 8px;
+}
+
+/* Contenido */
+
+.magic-card-caption {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.magic-card-symbol {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  border: 1px solid var(--card-line);
+  border-radius: 50%;
+  font-size: 32px;
+  color: var(--primary);
+}
+
+.magic-card-title {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+  line-height: 1.4;
+}
+
+.magic-card-text {
+  font-size: 13px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+.magic-card-seal {
+  margin-top: auto;
+  color: var(--secondary);
+  font-size: 20px;
+}
+
+.magic-card-seal svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Estados de las cartas */
+
+.magic-card.is-selected .magic-card-front {
+  box-shadow: var(--shadow-discovery);
+  border-color: var(--gold);
+}
+
+.magic-card.is-matched .magic-card-front {
+  border-color: var(--success);
+  box-shadow: var(--shadow-discovery);
+}
+
+/* Cartas compactas */
+
+.magic-card-compact {
+  height: 230px;
+}
+
+.magic-card-compact .magic-card-symbol {
+  width: 38px;
+  height: 38px;
+  font-size: 24px;
+}
+
+.magic-card-compact .magic-card-title {
+  font-size: 14px;
+}
+
+.magic-card-compact .magic-card-back,
+.magic-card-compact .magic-card-front {
+  min-height: 0;
+}
+
+/* Estilos complementarios de tarjetas y opciones */
+
+.magic-card-header {
+  position: relative;
+  padding: 1rem 1.1rem;
+  border-bottom: 1px dashed var(--card-line);
+}
+
+.magic-card-body {
+  padding: 1.1rem;
+}
+
+.magic-card-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border-radius: 0.9rem;
+  background: rgba(255, 255, 255, 0.68);
+  border: 1px solid rgba(90, 75, 55, 0.12);
+  text-align: left;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.magic-card-option:hover {
+  background: rgba(255, 255, 255, 0.92);
+  transform: translateY(-1px);
+}
+
+.magic-card-option:disabled {
+  cursor: default;
+}
+
+.magic-card-option.correct {
+  border-color: rgba(52, 135, 83, 0.4);
+  background: rgba(227, 247, 232, 0.95);
+}
+
+.magic-card-option.incorrect {
+  border-color: rgba(180, 65, 65, 0.35);
+  background: rgba(255, 232, 232, 0.95);
+}
+
+.magic-card-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  height: 2rem;
+  padding: 0 0.5rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(90, 75, 55, 0.12);
+  font-weight: 800;
+  font-size: 0.8rem;
+}
+
+.magic-card-result {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(90, 75, 55, 0.12);
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.card-table {
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+}
+
+.card-collection {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 16px;
+}
+
+/* Adaptación a pantallas pequeñas */
+
 @media (max-width: 640px) {
-  .magic-card { height: 280px; }
-  .magic-card-front { padding: 18px 14px 12px; gap: 9px; }
-  .magic-card-answer { height: 410px; }
-  .magic-card-answer .magic-card-front { padding: 18px 12px 12px; }
-  .magic-card-text { font-size: 12px; }
-  .magic-card-compact { height: 240px; }
+  .magic-card {
+    height: 280px;
+  }
+
+  .magic-card-front {
+    padding: 18px 14px 12px;
+    gap: 9px;
+  }
+
+  .magic-card-answer {
+    height: 410px;
+  }
+
+  .magic-card-answer .magic-card-front {
+    padding: 18px 12px 12px;
+  }
+
+  .magic-card-text {
+    font-size: 12px;
+  }
+
+  .magic-card-compact {
+    height: 240px;
+  }
+
+  .magic-card-body {
+    padding: 0.9rem;
+  }
+
+  .magic-card-option {
+    padding: 0.75rem 0.8rem;
+  }
 }
-@media (prefers-reduced-motion: reduce) { .magic-card-turn { transition: none; } }
+
+/* Accesibilidad */
+
+@media (prefers-reduced-motion: reduce) {
+  .magic-card-turn {
+    transition: none;
+  }
+}

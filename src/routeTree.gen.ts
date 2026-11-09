@@ -10,12 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BosqueRouteImport } from './routes/bosque'
+import { Route as CiudadRouteImport } from './routes/ciudad'
+import { Route as FortalezaRouteImport } from './routes/fortaleza'
 import { Route as GlosarioRouteImport } from './routes/glosario'
 import { Route as InsigniasRouteImport } from './routes/insignias'
 import { Route as MapaRouteImport } from './routes/mapa'
 import { Route as MisionesRouteImport } from './routes/misiones'
 import { Route as ProgresoRouteImport } from './routes/progreso'
 import { Route as ValleRouteImport } from './routes/valle'
+import { Route as AventuraFortalezaZonaRouteImport } from './routes/aventura-fortaleza.$zona'
+import { Route as AventuraTecnologicaZonaRouteImport } from './routes/aventura-tecnologica.$zona'
 import { Route as AventuraZonaRouteImport } from './routes/aventura.$zona'
 import { Route as MisionPreguntasRouteImport } from './routes/mision.preguntas'
 import { Route as MisionRelacionarRouteImport } from './routes/mision.relacionar'
@@ -24,6 +29,21 @@ import { Route as MisionValleRouteImport } from './routes/mision.valle'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BosqueRoute = BosqueRouteImport.update({
+  id: '/bosque',
+  path: '/bosque',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CiudadRoute = CiudadRouteImport.update({
+  id: '/ciudad',
+  path: '/ciudad',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FortalezaRoute = FortalezaRouteImport.update({
+  id: '/fortaleza',
+  path: '/fortaleza',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GlosarioRoute = GlosarioRouteImport.update({
@@ -56,6 +76,16 @@ const ValleRoute = ValleRouteImport.update({
   path: '/valle',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AventuraFortalezaZonaRoute = AventuraFortalezaZonaRouteImport.update({
+  id: '/aventura-fortaleza/$zona',
+  path: '/aventura-fortaleza/$zona',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AventuraTecnologicaZonaRoute = AventuraTecnologicaZonaRouteImport.update({
+  id: '/aventura-tecnologica/$zona',
+  path: '/aventura-tecnologica/$zona',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AventuraZonaRoute = AventuraZonaRouteImport.update({
   id: '/aventura/$zona',
   path: '/aventura/$zona',
@@ -79,12 +109,17 @@ const MisionValleRoute = MisionValleRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/bosque': typeof BosqueRoute
+  '/ciudad': typeof CiudadRoute
+  '/fortaleza': typeof FortalezaRoute
   '/glosario': typeof GlosarioRoute
   '/insignias': typeof InsigniasRoute
   '/mapa': typeof MapaRoute
   '/misiones': typeof MisionesRoute
   '/progreso': typeof ProgresoRoute
   '/valle': typeof ValleRoute
+  '/aventura-fortaleza/$zona': typeof AventuraFortalezaZonaRoute
+  '/aventura-tecnologica/$zona': typeof AventuraTecnologicaZonaRoute
   '/aventura/$zona': typeof AventuraZonaRoute
   '/mision/preguntas': typeof MisionPreguntasRoute
   '/mision/relacionar': typeof MisionRelacionarRoute
@@ -92,12 +127,17 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/bosque': typeof BosqueRoute
+  '/ciudad': typeof CiudadRoute
+  '/fortaleza': typeof FortalezaRoute
   '/glosario': typeof GlosarioRoute
   '/insignias': typeof InsigniasRoute
   '/mapa': typeof MapaRoute
   '/misiones': typeof MisionesRoute
   '/progreso': typeof ProgresoRoute
   '/valle': typeof ValleRoute
+  '/aventura-fortaleza/$zona': typeof AventuraFortalezaZonaRoute
+  '/aventura-tecnologica/$zona': typeof AventuraTecnologicaZonaRoute
   '/aventura/$zona': typeof AventuraZonaRoute
   '/mision/preguntas': typeof MisionPreguntasRoute
   '/mision/relacionar': typeof MisionRelacionarRoute
@@ -106,12 +146,17 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/bosque': typeof BosqueRoute
+  '/ciudad': typeof CiudadRoute
+  '/fortaleza': typeof FortalezaRoute
   '/glosario': typeof GlosarioRoute
   '/insignias': typeof InsigniasRoute
   '/mapa': typeof MapaRoute
   '/misiones': typeof MisionesRoute
   '/progreso': typeof ProgresoRoute
   '/valle': typeof ValleRoute
+  '/aventura-fortaleza/$zona': typeof AventuraFortalezaZonaRoute
+  '/aventura-tecnologica/$zona': typeof AventuraTecnologicaZonaRoute
   '/aventura/$zona': typeof AventuraZonaRoute
   '/mision/preguntas': typeof MisionPreguntasRoute
   '/mision/relacionar': typeof MisionRelacionarRoute
@@ -121,12 +166,17 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/bosque'
+    | '/ciudad'
+    | '/fortaleza'
     | '/glosario'
     | '/insignias'
     | '/mapa'
     | '/misiones'
     | '/progreso'
     | '/valle'
+    | '/aventura-fortaleza/$zona'
+    | '/aventura-tecnologica/$zona'
     | '/aventura/$zona'
     | '/mision/preguntas'
     | '/mision/relacionar'
@@ -134,12 +184,17 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/bosque'
+    | '/ciudad'
+    | '/fortaleza'
     | '/glosario'
     | '/insignias'
     | '/mapa'
     | '/misiones'
     | '/progreso'
     | '/valle'
+    | '/aventura-fortaleza/$zona'
+    | '/aventura-tecnologica/$zona'
     | '/aventura/$zona'
     | '/mision/preguntas'
     | '/mision/relacionar'
@@ -147,12 +202,17 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/bosque'
+    | '/ciudad'
+    | '/fortaleza'
     | '/glosario'
     | '/insignias'
     | '/mapa'
     | '/misiones'
     | '/progreso'
     | '/valle'
+    | '/aventura-fortaleza/$zona'
+    | '/aventura-tecnologica/$zona'
     | '/aventura/$zona'
     | '/mision/preguntas'
     | '/mision/relacionar'
@@ -161,12 +221,17 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BosqueRoute: typeof BosqueRoute
+  CiudadRoute: typeof CiudadRoute
+  FortalezaRoute: typeof FortalezaRoute
   GlosarioRoute: typeof GlosarioRoute
   InsigniasRoute: typeof InsigniasRoute
   MapaRoute: typeof MapaRoute
   MisionesRoute: typeof MisionesRoute
   ProgresoRoute: typeof ProgresoRoute
   ValleRoute: typeof ValleRoute
+  AventuraFortalezaZonaRoute: typeof AventuraFortalezaZonaRoute
+  AventuraTecnologicaZonaRoute: typeof AventuraTecnologicaZonaRoute
   AventuraZonaRoute: typeof AventuraZonaRoute
   MisionPreguntasRoute: typeof MisionPreguntasRoute
   MisionRelacionarRoute: typeof MisionRelacionarRoute
@@ -180,6 +245,27 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bosque': {
+      id: '/bosque'
+      path: '/bosque'
+      fullPath: '/bosque'
+      preLoaderRoute: typeof BosqueRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ciudad': {
+      id: '/ciudad'
+      path: '/ciudad'
+      fullPath: '/ciudad'
+      preLoaderRoute: typeof CiudadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/fortaleza': {
+      id: '/fortaleza'
+      path: '/fortaleza'
+      fullPath: '/fortaleza'
+      preLoaderRoute: typeof FortalezaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/glosario': {
@@ -224,6 +310,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ValleRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/aventura-fortaleza/$zona': {
+      id: '/aventura-fortaleza/$zona'
+      path: '/aventura-fortaleza/$zona'
+      fullPath: '/aventura-fortaleza/$zona'
+      preLoaderRoute: typeof AventuraFortalezaZonaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/aventura-tecnologica/$zona': {
+      id: '/aventura-tecnologica/$zona'
+      path: '/aventura-tecnologica/$zona'
+      fullPath: '/aventura-tecnologica/$zona'
+      preLoaderRoute: typeof AventuraTecnologicaZonaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/aventura/$zona': {
       id: '/aventura/$zona'
       path: '/aventura/$zona'
@@ -257,12 +357,17 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BosqueRoute: BosqueRoute,
+  CiudadRoute: CiudadRoute,
+  FortalezaRoute: FortalezaRoute,
   GlosarioRoute: GlosarioRoute,
   InsigniasRoute: InsigniasRoute,
   MapaRoute: MapaRoute,
   MisionesRoute: MisionesRoute,
   ProgresoRoute: ProgresoRoute,
   ValleRoute: ValleRoute,
+  AventuraFortalezaZonaRoute: AventuraFortalezaZonaRoute,
+  AventuraTecnologicaZonaRoute: AventuraTecnologicaZonaRoute,
   AventuraZonaRoute: AventuraZonaRoute,
   MisionPreguntasRoute: MisionPreguntasRoute,
   MisionRelacionarRoute: MisionRelacionarRoute,
