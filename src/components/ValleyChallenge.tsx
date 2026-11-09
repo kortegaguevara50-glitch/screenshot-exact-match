@@ -46,7 +46,23 @@ export function ValleyChallenge({ zone }: { zone: ValleyZone }) {
 
   const entry = officialTerm(zone.terms[draft.step] ?? zone.terms[0] ?? 10);
   const pieces = definitionPieces(zone.terms[0] ?? 26);
-  const order = draft.order.length ? draft.order : [2, 0, 3, 1];
+
+const defaultOrder =
+  pieces.length === 4
+    ? [2, 0, 3, 1]
+    : Array.from({ length: pieces.length }, (_, i) => i).reverse();
+
+const validSavedOrder =
+  draft.order.length === pieces.length &&
+  new Set(draft.order).size === pieces.length &&
+  draft.order.every(
+    (piece) =>
+      Number.isInteger(piece) &&
+      piece >= 0 &&
+      piece < pieces.length
+  );
+
+const order = validSavedOrder ? draft.order : defaultOrder;
   const choices = [entry.number, ...zone.terms.filter((number) => number !== entry.number), ...[10, 25, 28, 67].filter((number) => number !== entry.number && !zone.terms.includes(number))].slice(0, 4).sort((a, b) => a - b);
   const activeRevealed = revealed.includes(`c${entry.number}`);
   return <section className="quest-enter py-4">
@@ -77,7 +93,7 @@ export function ValleyChallenge({ zone }: { zone: ValleyZone }) {
         <div className="mt-5 flex flex-wrap gap-3"><Button disabled={!pieces.every((_, i) => revealed.includes(`p${i}`))} onClick={() => {
           if (order.every((value, i) => value === i)) submit({ ...draft, order }, true);
           else miss("order", "La inscripción aún no encaja. El pergamino conserva el texto original.");
-        }}>Unir las cartas<Check /></Button><Button variant="outline" size="icon" aria-label="Reordenar desde el inicio" title="Reordenar desde el inicio" onClick={() => save({ ...draft, order: [2, 0, 3, 1] })}><RotateCcw /></Button></div>
+        }}>Unir las cartas<Check /></Button><Button variant="outline" size="icon" aria-label="Reordenar desde el inicio" title="Reordenar desde el inicio" onClick={() => save({ ...draft, order: defaultOrder})}><RotateCcw /></Button></div>
         <details className="mt-4 text-sm"><summary className="cursor-pointer font-bold text-secondary">Pergamino de referencia</summary><p className="mt-2 leading-relaxed">{entry.definition}</p></details>
       </>}
     </>}
